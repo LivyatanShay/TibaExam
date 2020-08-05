@@ -1,0 +1,10 @@
+<h1>Hi {{currentUser.username}}!</h1>
+<h2>Please select:</h2>
+<div class="container">
+  <div>
+    <a type="button" mat-raised-button color="primary" [routerLink]="['/get-favorites']">Favorites</a>
+  </div>
+  <div>
+    <a type="button" mat-raised-button color="primary" [routerLink]="['/search']">Search</a>
+  </div>
+</div>

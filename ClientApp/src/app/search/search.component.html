@@ -1,0 +1,38 @@
+<form class="search-form">
+  <mat-form-field class="search-full-width">
+    <mat-label>Type here...</mat-label>
+    <input matInput #searchInput value=''
+      (keydown.enter)='searchInput.value.length >= 1 ? searchTerm(searchInput.value) : null'
+      [formControl]="searchFormControl"
+      [errorStateMatcher]="matcher"
+      placeholder="language:C# AND Google API"
+      maxlength="256"
+      minlength="1">
+    <mat-hint>Search in GitHub repositories</mat-hint>
+    <mat-hint align="end">{{searchInput.value.length}} / 256</mat-hint>
+    <mat-error>
+      Search term must not contain more than 5 verbs (AND/OR/NOT) in total
+    </mat-error>
+  </mat-form-field>
+  <button mat-raised-button [disabled]="searchInput.value.length < 1 || searchFormControl.errors !== null || isDisabled" color="primary" (click)="searchTerm(searchInput.value)">Search</button>
+</form>
+
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="results">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Url</th>
+      <th>Favorite</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of results; index as i">
+      <td>{{ item.name }}</td>
+      <td>{{ item.url }}</td>
+      <td>
+        <button *ngIf="!item.isInFavorites" (click)="addToFavorites(item)">Add to favorites</button>
+        <div *ngIf="item.isInFavorites">✔</div>
+      </td>
+    </tr>
+  </tbody>
+</table>
